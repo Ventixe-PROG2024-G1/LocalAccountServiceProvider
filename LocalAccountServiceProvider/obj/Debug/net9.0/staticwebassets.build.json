@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Hm+IIBlbGKWnVX45dVE6yMQZ+8W2dgx1M3bt+95UNME=",
+  "Source": "LocalAccountServiceProvider",
+  "BasePath": "_content/LocalAccountServiceProvider",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

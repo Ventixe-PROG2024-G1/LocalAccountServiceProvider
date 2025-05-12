@@ -1,0 +1,2 @@
+obj\Debug\net9.0\Protos/Appuser.cs \
+obj\Debug\net9.0\Protos/AppuserGrpc.cs: Protos/appuser.proto
