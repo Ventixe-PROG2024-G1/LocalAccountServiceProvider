@@ -11,16 +11,9 @@ x.UseSqlServer(builder.Configuration.GetConnectionString("ConnStringAuthenticati
 
 builder.Services.AddIdentity<AppUserEntity, IdentityRole>().AddEntityFrameworkStores<AuthenticationContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IProfileService, ProfileService>();
-builder.Services.AddScoped<IAppUserService, AppUserService>();
 builder.Services.AddGrpc();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-
-builder.Services.AddGrpcClient<ProfileContract.ProfileContractClient>(x =>
-{
-    x.Address = new Uri(builder.Configuration["ProfileServiceProvider"]!);
-});
 
 var app = builder.Build();
 

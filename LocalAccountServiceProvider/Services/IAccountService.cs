@@ -1,5 +1,4 @@
 ﻿using Grpc.Core;
-using LocalAccountServiceProvider.Models;
 
 namespace LocalAccountServiceProvider.Services
 {
@@ -7,8 +6,8 @@ namespace LocalAccountServiceProvider.Services
     {
         Task<AccountServiceResult> CreateAccount(CreateAccountRequest request, ServerCallContext context);
         Task<AccountServiceResult> FindByEmail(FindByEmailRequest request, ServerCallContext context);
-        Task<IEnumerable<AppIdentityUser>> GetAllUserIdentities();
-        Task<AppIdentityUser?> GetUserIdentityById(string id);
+        Task<AccountResponse> GetAccount(GetAccountRequest request, ServerCallContext context);
+        Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context);
         Task<string> GetUserRoleById(string id);
     }
 }

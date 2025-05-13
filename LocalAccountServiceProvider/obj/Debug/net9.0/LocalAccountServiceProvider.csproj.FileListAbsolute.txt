@@ -176,3 +176,4 @@ C:\Ventixe\LocalAccountServiceProvider\LocalAccountServiceProvider\obj\Debug\net
 C:\Ventixe\LocalAccountServiceProvider\LocalAccountServiceProvider\obj\Debug\net9.0\LocalAccountServiceProvider.pdb
 C:\Ventixe\LocalAccountServiceProvider\LocalAccountServiceProvider\obj\Debug\net9.0\LocalAccountServiceProvider.genruntimeconfig.cache
 C:\Ventixe\LocalAccountServiceProvider\LocalAccountServiceProvider\obj\Debug\net9.0\ref\LocalAccountServiceProvider.dll
+C:\Ventixe\LocalAccountServiceProvider\LocalAccountServiceProvider\obj\Debug\net9.0\LocalAccountServiceProvider.sourcelink.json

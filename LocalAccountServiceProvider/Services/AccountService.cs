@@ -1,6 +1,5 @@
 ﻿using Grpc.Core;
 using LocalAccountServiceProvider.Data.Entities;
-using LocalAccountServiceProvider.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,38 +56,37 @@ namespace LocalAccountServiceProvider.Services
             return new AccountServiceResult { Success = false, Error = "Account not found" };
         }
 
-        public async Task<AppIdentityUser?> GetUserIdentityById(string id)
+        public override async Task<AccountResponse> GetAccount(GetAccountRequest request, ServerCallContext context)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            var role = await GetUserRoleById(id);
-
-            return new AppIdentityUser
+            var account = await _userManager.FindByIdAsync(request.Id);
+            var role = await GetUserRoleById(request.Id);
+            return new AccountResponse
             {
-                Id = user.Id,
-                Email = user.Email,
-                Role = role
+                Id = account.Id,
+                Email = account.Email,
+                Role = role,
             };
         }
 
-        public async Task<IEnumerable<AppIdentityUser>> GetAllUserIdentities()
+        public override async Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context)
         {
-            var users = await _userManager.Users.ToListAsync();
+            var accounts = await _userManager.Users.ToListAsync();
 
-            var userIdentities = new List<AppIdentityUser>();
+            var response = new AllAccountsResponse();
 
-            foreach (var user in users)
+            foreach (var account in accounts)
             {
-                var role = await GetUserRoleById(user.Id);
+                var role = await GetUserRoleById(account.Id);
 
-                userIdentities.Add(new AppIdentityUser
+                response.Accounts.Add(new AccountResponse
                 {
-                    Id = user.Id,
-                    Email = user.Email,
-                    Role = role
+                    Id = account.Id,
+                    Email = account.Email,
+                    Role = role,
                 });
             }
 
-            return userIdentities;
+            return response;
         }
 
         public async Task<string> GetUserRoleById(string id)
