@@ -51,6 +51,12 @@ namespace LocalAccountServiceProvider.Services {
     static readonly grpc::Marshaller<global::LocalAccountServiceProvider.Services.AccountServiceResult> __Marshaller_AccountServiceResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::LocalAccountServiceProvider.Services.AccountServiceResult.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::LocalAccountServiceProvider.Services.FindByEmailRequest> __Marshaller_FindByEmailRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::LocalAccountServiceProvider.Services.FindByEmailRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::LocalAccountServiceProvider.Services.GetAccountRequest> __Marshaller_GetAccountRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::LocalAccountServiceProvider.Services.GetAccountRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::LocalAccountServiceProvider.Services.AccountResponse> __Marshaller_AccountResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::LocalAccountServiceProvider.Services.AccountResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::LocalAccountServiceProvider.Services.AllAccountsResponse> __Marshaller_AllAccountsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::LocalAccountServiceProvider.Services.AllAccountsResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::LocalAccountServiceProvider.Services.CreateAccountRequest, global::LocalAccountServiceProvider.Services.AccountServiceResult> __Method_CreateAccount = new grpc::Method<global::LocalAccountServiceProvider.Services.CreateAccountRequest, global::LocalAccountServiceProvider.Services.AccountServiceResult>(
@@ -67,6 +73,22 @@ namespace LocalAccountServiceProvider.Services {
         "FindByEmail",
         __Marshaller_FindByEmailRequest,
         __Marshaller_AccountServiceResult);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::LocalAccountServiceProvider.Services.GetAccountRequest, global::LocalAccountServiceProvider.Services.AccountResponse> __Method_GetAccount = new grpc::Method<global::LocalAccountServiceProvider.Services.GetAccountRequest, global::LocalAccountServiceProvider.Services.AccountResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetAccount",
+        __Marshaller_GetAccountRequest,
+        __Marshaller_AccountResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::LocalAccountServiceProvider.Services.GetAccountRequest, global::LocalAccountServiceProvider.Services.AllAccountsResponse> __Method_GetAllAccounts = new grpc::Method<global::LocalAccountServiceProvider.Services.GetAccountRequest, global::LocalAccountServiceProvider.Services.AllAccountsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetAllAccounts",
+        __Marshaller_GetAccountRequest,
+        __Marshaller_AllAccountsResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -90,6 +112,18 @@ namespace LocalAccountServiceProvider.Services {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::LocalAccountServiceProvider.Services.AccountResponse> GetAccount(global::LocalAccountServiceProvider.Services.GetAccountRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::LocalAccountServiceProvider.Services.AllAccountsResponse> GetAllAccounts(global::LocalAccountServiceProvider.Services.GetAccountRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
@@ -99,7 +133,9 @@ namespace LocalAccountServiceProvider.Services {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_CreateAccount, serviceImpl.CreateAccount)
-          .AddMethod(__Method_FindByEmail, serviceImpl.FindByEmail).Build();
+          .AddMethod(__Method_FindByEmail, serviceImpl.FindByEmail)
+          .AddMethod(__Method_GetAccount, serviceImpl.GetAccount)
+          .AddMethod(__Method_GetAllAccounts, serviceImpl.GetAllAccounts).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -111,6 +147,8 @@ namespace LocalAccountServiceProvider.Services {
     {
       serviceBinder.AddMethod(__Method_CreateAccount, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::LocalAccountServiceProvider.Services.CreateAccountRequest, global::LocalAccountServiceProvider.Services.AccountServiceResult>(serviceImpl.CreateAccount));
       serviceBinder.AddMethod(__Method_FindByEmail, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::LocalAccountServiceProvider.Services.FindByEmailRequest, global::LocalAccountServiceProvider.Services.AccountServiceResult>(serviceImpl.FindByEmail));
+      serviceBinder.AddMethod(__Method_GetAccount, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::LocalAccountServiceProvider.Services.GetAccountRequest, global::LocalAccountServiceProvider.Services.AccountResponse>(serviceImpl.GetAccount));
+      serviceBinder.AddMethod(__Method_GetAllAccounts, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::LocalAccountServiceProvider.Services.GetAccountRequest, global::LocalAccountServiceProvider.Services.AllAccountsResponse>(serviceImpl.GetAllAccounts));
     }
 
   }

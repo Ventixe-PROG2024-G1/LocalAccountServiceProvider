@@ -32,9 +32,6 @@
 	<ItemGroup>
 
 		<Protobuf Include="Protos/account.proto" GrpcServices="Server" />
-     		
-
-		<Protobuf Include="Protos/accountprofile.proto" GrpcServices="Client" /> 
 	</ItemGroup>
 
 
