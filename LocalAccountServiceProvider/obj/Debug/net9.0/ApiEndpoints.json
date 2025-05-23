@@ -16,5 +16,83 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "LocalAccountServiceProvider.Controllers.AccountController",
+    "Method": "CreateAccount",
+    "RelativePath": "api/account/create-account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "LocalAccountServiceProvider.Data.DTOs.CreateAccountRequestRest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "LocalAccountServiceProvider.Data.Models.AccountServiceResultRest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "LocalAccountServiceProvider.Controllers.AccountController",
+    "Method": "FindByEmail",
+    "RelativePath": "api/account/find-by-email/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "LocalAccountServiceProvider.Data.Models.AccountServiceResultRest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "LocalAccountServiceProvider.Controllers.AccountController",
+    "Method": "GetAccountAsync",
+    "RelativePath": "api/account/get-account/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "LocalAccountServiceProvider.Data.Models.AccountResponseRest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
