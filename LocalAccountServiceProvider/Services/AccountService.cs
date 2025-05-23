@@ -1,20 +1,18 @@
 ﻿using Grpc.Core;
+using LocalAccountServiceProvider.Data.DTOs;
 using LocalAccountServiceProvider.Data.Entities;
+using LocalAccountServiceProvider.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocalAccountServiceProvider.Services
 {
-    public class AccountService(UserManager<AppUserEntity> userManager,
-            RoleManager<IdentityRole> roleManager
+    public class AccountService(UserManager<AppUserEntity> userManager
             ) : AccountContract.AccountContractBase, IAccountService
     {
-        // userManager innehåller repository med färdig funktionalitet för att kommunicera med databasen
         private readonly UserManager<AppUserEntity> _userManager = userManager;
 
-        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
-
-        public override async Task<AccountServiceResult> CreateAccount(CreateAccountRequest request, ServerCallContext context)
+        public async Task<AccountServiceResultRest> CreateAccount(CreateAccountRequestRest request)
         {
             try
             {
@@ -36,31 +34,31 @@ namespace LocalAccountServiceProvider.Services
 
                     await _userManager.AddToRoleAsync(appUser, role);
 
-                    return new AccountServiceResult { Success = true, Result = appUser.Id };
+                    return new AccountServiceResultRest { Success = true, Result = appUser.Id };
                 }
-                return new AccountServiceResult { Success = false, Error = string.Join(", ", response.Errors) };
+                return new AccountServiceResultRest { Success = false, Error = string.Join(", ", response.Errors) };
             }
             catch (Exception ex)
             {
-                return new AccountServiceResult { Success = false, Error = ex.Message };
+                return new AccountServiceResultRest { Success = false, Error = ex.Message };
             }
         }
 
-        public override async Task<AccountServiceResult> FindByEmail(FindByEmailRequest request, ServerCallContext context)
+        public async Task<AccountServiceResultRest> FindByEmail(FindByEmailRequestRest request)
         {
             var result = await _userManager.Users.AnyAsync(x => x.Email == request.Email);
             if (result)
             {
-                return new AccountServiceResult { Success = true };
+                return new AccountServiceResultRest { Success = true };
             }
-            return new AccountServiceResult { Success = false, Error = "Account not found" };
+            return new AccountServiceResultRest { Success = false, Error = "Account not found" };
         }
 
-        public override async Task<AccountResponse> GetAccount(GetAccountRequest request, ServerCallContext context)
+        public async Task<AccountResponseRest> GetAccount(GetAccountRequestRest request)
         {
             var account = await _userManager.FindByIdAsync(request.Id);
             var role = await GetUserRoleById(request.Id);
-            return new AccountResponse
+            return new AccountResponseRest
             {
                 Id = account.Id,
                 Email = account.Email,
@@ -68,26 +66,38 @@ namespace LocalAccountServiceProvider.Services
             };
         }
 
-        public override async Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context)
-        {
-            var accounts = await _userManager.Users.ToListAsync();
+        //public override async Task<AccountResponse> GetAccount(GetAccountRequest request, ServerCallContext context)
+        //{
+        //    var account = await _userManager.FindByIdAsync(request.Id);
+        //    var role = await GetUserRoleById(request.Id);
+        //    return new AccountResponse
+        //    {
+        //        Id = account.Id,
+        //        Email = account.Email,
+        //        Role = role,
+        //    };
+        //}
 
-            var response = new AllAccountsResponse();
+        //public override async Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context)
+        //{
+        //    var accounts = await _userManager.Users.ToListAsync();
 
-            foreach (var account in accounts)
-            {
-                var role = await GetUserRoleById(account.Id);
+        //    var response = new AllAccountsResponse();
 
-                response.Accounts.Add(new AccountResponse
-                {
-                    Id = account.Id,
-                    Email = account.Email,
-                    Role = role,
-                });
-            }
+        //    foreach (var account in accounts)
+        //    {
+        //        var role = await GetUserRoleById(account.Id);
 
-            return response;
-        }
+        //        response.Accounts.Add(new AccountResponse
+        //        {
+        //            Id = account.Id,
+        //            Email = account.Email,
+        //            Role = role,
+        //        });
+        //    }
+
+        //    return response;
+        //}
 
         public async Task<string> GetUserRoleById(string id)
         {
