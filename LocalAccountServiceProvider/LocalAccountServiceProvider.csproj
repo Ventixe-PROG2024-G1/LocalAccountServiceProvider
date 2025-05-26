@@ -29,10 +29,10 @@
     </PackageReference>
   </ItemGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
 
 		<Protobuf Include="Protos/account.proto" GrpcServices="Server" />
-	</ItemGroup>
+	</ItemGroup>-->
 
 
 </Project>

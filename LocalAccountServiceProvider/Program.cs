@@ -17,8 +17,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.MapGrpcService<AccountService>();
-app.MapGet("/", () => "AccountServiceProvider is running.");
+//app.MapGrpcService<AccountService>();
+//app.MapGet("/", () => "AccountServiceProvider is running.");
 app.UseHttpsRedirection();
 
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
