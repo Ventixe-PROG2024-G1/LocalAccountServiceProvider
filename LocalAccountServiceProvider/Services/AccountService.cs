@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LocalAccountServiceProvider.Services
 {
     public class AccountService(UserManager<AppUserEntity> userManager
-            ) : AccountContract.AccountContractBase, IAccountService
+            ) : IAccountService
     {
         private readonly UserManager<AppUserEntity> _userManager = userManager;
 

@@ -12,7 +12,7 @@ namespace LocalAccountServiceProvider.Services
 
         Task<AccountResponseRest> GetAccount(GetAccountRequestRest request);
 
-        Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context);
+        //Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context);
 
         Task<string> GetUserRoleById(string id);
     }
