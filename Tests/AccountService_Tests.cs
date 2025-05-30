@@ -4,6 +4,10 @@ using LocalAccountServiceProvider.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using LocalAccountServiceProvider.Data.DTOs;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
 namespace Tests
 {
@@ -13,9 +17,9 @@ namespace Tests
 
         private readonly ServiceProvider _provider;
         private readonly UserManager<AppUserEntity> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AuthenticationContext _context;
         private readonly IAccountService _accountService;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountService_Tests()
         {
@@ -29,17 +33,40 @@ namespace Tests
                 x.Password.RequiredLength = 8;
                 x.SignIn.RequireConfirmedPhoneNumber = true;
             })
-                .AddEntityFrameworkStores<AuthenticationContext>()
-                .AddRoleManager<RoleManager<IdentityRole>>();
+            .AddEntityFrameworkStores<AuthenticationContext>();
+            services.AddLogging();
 
-            // Bygger services (typ motsvarande ** var app = builder.Build ** i program.cs)
+            // **AI-genererad kod**
+            // Jag använde mig av AI-genererad kod för att skapa upp rollerna i InMemory-databasen
+            services.AddScoped<IRoleStore<IdentityRole>, RoleStore<IdentityRole, AuthenticationContext>>();
+            services.AddScoped<IdentityErrorDescriber>();
+            services.AddScoped<RoleManager<IdentityRole>>();
+            services.AddScoped<ILogger<RoleManager<IdentityRole>>, Logger<RoleManager<IdentityRole>>>();
+
             _provider = services.BuildServiceProvider();
 
-            // Sätter värden till instansvariabler
+            // Tilldelar värden till instansvariabler
             _userManager = _provider.GetRequiredService<UserManager<AppUserEntity>>();
-            _context = _provider.GetRequiredService<AuthenticationContext>();
             _roleManager = _provider.GetRequiredService<RoleManager<IdentityRole>>();
-            _accountService = new AccountService(_userManager, _roleManager);
+            _context = _provider.GetRequiredService<AuthenticationContext>();
+            _accountService = new AccountService(_userManager);
+
+            // Här skaps rollerna upp i InMemory-databasen
+            InitializeRolesAsync().Wait();
+        }
+
+        private async Task InitializeRolesAsync()
+        {
+            string[] roleNames = { "Admin", "User" };
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await _roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
         }
 
         public void Dispose()
@@ -47,23 +74,45 @@ namespace Tests
             _context.Database.EnsureDeleted();
             _provider.Dispose();
         }
+
+        #endregion Configurations
+
+        [Fact]
+        public async Task CreateAccount_ShouldReturnSuccess_WhenValidDataProvided()
+        {
+            // Arrange
+            var request = new CreateAccountRequestRest
+            {
+                Email = "test@domain.com",
+                Password = "Bytmig123!"
+            };
+
+            // Act
+            var response = await _accountService.CreateAccount(request);
+
+            // Assert
+            Assert.True(response.Success);
+
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            Assert.NotNull(user);
+
+            Dispose();
+        }
+
+        [Fact]
+        public async Task FindByEmail_ShouldReturnTrue_IfAccountExists()
+        {
+            await _userManager.CreateAsync(new AppUserEntity { UserName = "test@domain.com", Email = "test@domain.com" });
+            var request = new FindByEmailRequestRest
+            {
+                Email = "test@domain.com",
+            };
+
+            var response = await _accountService.FindByEmail(request);
+
+            Assert.True(response.Success);
+
+            Dispose();
+        }
     }
-
-    #endregion Configurations
-
-    //[Fact]
-    //    public async Task CreateAccount_ShouldReturnSuccess_WhenValidDataProvided()
-    //    {
-    //        // arrange
-    //        var request = new CreateAccountRequest
-    //        {
-    //            Email = "test@domain.com",
-    //            Password = "Bytmig123!"
-    //        };
-
-    //        // act
-
-    //        var response = await _accountService.CreateAccount(request);
-    //    }
-    //}
 }

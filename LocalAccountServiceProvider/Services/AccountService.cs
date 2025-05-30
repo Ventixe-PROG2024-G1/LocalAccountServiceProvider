@@ -16,7 +16,6 @@ namespace LocalAccountServiceProvider.Services
         {
             try
             {
-                // Gör factory
                 var appUser = new AppUserEntity
                 {
                     UserName = request.Email,
@@ -65,39 +64,6 @@ namespace LocalAccountServiceProvider.Services
                 Role = role,
             };
         }
-
-        //public override async Task<AccountResponse> GetAccount(GetAccountRequest request, ServerCallContext context)
-        //{
-        //    var account = await _userManager.FindByIdAsync(request.Id);
-        //    var role = await GetUserRoleById(request.Id);
-        //    return new AccountResponse
-        //    {
-        //        Id = account.Id,
-        //        Email = account.Email,
-        //        Role = role,
-        //    };
-        //}
-
-        //public override async Task<AllAccountsResponse> GetAllAccounts(GetAccountRequest request, ServerCallContext context)
-        //{
-        //    var accounts = await _userManager.Users.ToListAsync();
-
-        //    var response = new AllAccountsResponse();
-
-        //    foreach (var account in accounts)
-        //    {
-        //        var role = await GetUserRoleById(account.Id);
-
-        //        response.Accounts.Add(new AccountResponse
-        //        {
-        //            Id = account.Id,
-        //            Email = account.Email,
-        //            Role = role,
-        //        });
-        //    }
-
-        //    return response;
-        //}
 
         public async Task<string> GetUserRoleById(string id)
         {
