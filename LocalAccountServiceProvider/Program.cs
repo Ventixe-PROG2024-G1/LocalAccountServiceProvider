@@ -1,5 +1,6 @@
 using LocalAccountServiceProvider.Data.Contexts;
 using LocalAccountServiceProvider.Data.Entities;
+using LocalAccountServiceProvider.Middlewares;
 using LocalAccountServiceProvider.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

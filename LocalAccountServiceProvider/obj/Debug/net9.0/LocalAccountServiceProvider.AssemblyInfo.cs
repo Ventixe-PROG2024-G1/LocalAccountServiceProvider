@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LocalAccountServiceProvider")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14ca2499075222c1bbf2c31b0c931cc14f97b27a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+58bc79c2e9271f52b767101a002d4dd42d16eba8")]
 [assembly: System.Reflection.AssemblyProductAttribute("LocalAccountServiceProvider")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LocalAccountServiceProvider")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
